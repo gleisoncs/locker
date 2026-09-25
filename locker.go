@@ -25,6 +25,14 @@ func NewLocker(compartments []*Compartment) *Locker {
 	}
 }
 
+func NewLockerWithSizes(sizes ...Size) *Locker {
+	compartments := make([]*Compartment, len(sizes))
+	for i, size := range sizes {
+		compartments[i] = NewCompartment(size)
+	}
+	return NewLocker(compartments)
+}
+
 func (l *Locker) DepositPackage(size Size) (string, error) {
 	slot := l.getAvailableSlot(size)
 	if slot == nil {
